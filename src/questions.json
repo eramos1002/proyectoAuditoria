@@ -1,0 +1,55 @@
+[{
+        "text": "¿Aplica o se tiene un plan de seguridad específico para la edificación?",
+        "risks": ["incendio", "vandalismo"],
+        "bad": false
+
+    ]
+}, {
+    "id": 1,
+    "title": "¿Qué atributo usamos que una columna se expanda varias celdas?",
+    "answers": [{
+            "title": "<coldspan>",
+            "correct": false
+        },
+        {
+            "title": "<rowspan>",
+            "correct": true
+        },
+        {
+            "title": "<tfoot>",
+            "correct": false
+        }
+    ]
+}, {
+    "id": 2,
+    "title": "¿Qué atributo utilizamos para definir una lista desordenada?",
+    "answers": [{
+            "title": "<li>",
+            "correct": false
+        },
+        {
+            "title": "<ul>",
+            "correct": true
+        },
+        {
+            "title": "<ol>",
+            "correct": false
+        }
+    ]
+}, {
+    "id": 3,
+    "title": "¿Es HTML un lenguaje de programación?",
+    "answers": [{
+            "title": "Si",
+            "correct": false
+        },
+        {
+            "title": "No, es un lenguaje de marcas",
+            "correct": true
+        },
+        {
+            "title": "No, solo combinado con CCS",
+            "correct": false
+        }
+    ]
+}]
