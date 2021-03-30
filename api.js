@@ -1,56 +1,31 @@
 const { appInit } = require("./appConf");
 const { bdInit } = require("./bdConf");
-const Audit = require("./models/audit");
-const Building = require("./models/building");
-const User = require("./models/user");
+const authentication = require("./middleware/authentication");
+const userEndpoints = require("./endpoints/user");
+const buildingEndpoints = require("./endpoints/building");
+const auditEndpoints = require("./endpoints/audit");
 
-const api = appInit();
+// Conexión a la base de datos
 const bd = bdInit();
 
-//ENDPOINTS AUDITS
-api.get("/api/audits", (request, response) => {
-    Audit.find((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            response.send(data);
-        }
-    });
-});
+// Creación de la aplicación
+const api = appInit();
 
-api.get("/api/audits", (request, response) => {
-    Audit.find((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            response.send(data);
-        }
-    });
-});
+// Añade a la aplicación soporte para tokens JWT
+authentication.register(api);
 
-//ENDPOINTS BUILDINGS
-api.get("/api/buildings", (request, response) => {
-    Building.find((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            response.send(data);
-        }
-    });
-});
+// Añade a la aplicación los endpoints de usuario
+userEndpoints.register(api);
 
-//ENDPOINTS USERS
-api.get("/api/users", (request, response) => {
-    User.find((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            response.send(data);
-        }
-    });
-});
+// Añade a la aplicación los endpoints de edificios
+buildingEndpoints.register(api);
 
-const PORT = 2005;
-api.listen(PORT, () => {
-    console.log(`Conexion corriendo en puerto ${PORT}`);
+// Añade a la aplicación los endpoints de auditorías
+auditEndpoints.register(api);
+
+// Levantar la aplicación y ponerla a escuchar
+const serviceName = process.env['SERVICE_NAME'] || 'server';
+const deployPort = process.env['DEPLOY_PORT'] || 8080;
+api.listen(deployPort, () => {
+    console.log(`[APPLICATION] Listening '${serviceName}' at port ${deployPort}...`);
 });
