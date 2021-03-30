@@ -1,5 +1,4 @@
 const mongoose = require("mongoose"); // libreria que permite hacer conecciones a bdatos de MONGO DB y conecciones
-const { db } = require("./models/user");
 const mongoUrl = process.env['MONGO_DB_URL'] || 'mongodb://localhost/BBDDproy';
 
 const bdInit = () => {
