@@ -25,36 +25,11 @@ export default class Sidebar extends React.Component {
 
                 <hr className="sidebar-divider my-0"/>
 
-
                 <li className={`nav-item ${this.checkRoute('^/$') ? 'active' : ''}`}>
                     <a className="nav-link" href="#">
                         <i className="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
-                </li>
-
-                <hr className="sidebar-divider"/>
-
-                <div className="sidebar-heading">
-                    Interface
-                </div>
-
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <i className="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
-                    </a>
-                    <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div className="bg-white py-2 collapse-inner rounded">
-                            <h6 className="collapse-header">Custom Utilities:</h6>
-                            <a className="collapse-item" href="utilities-color.html">Colors</a>
-                            <a className="collapse-item" href="utilities-border.html">Borders</a>
-                            <a className="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a className="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
                 </li>
 
                 <hr className="sidebar-divider"/>
@@ -67,7 +42,8 @@ export default class Sidebar extends React.Component {
                         <i className="fas fa-fw fa-folder"></i>
                         <span>Users</span>
                     </a>
-                    <div id="collapseUsers" className={`collapse ${this.checkRoute('^/users') ? 'show' : ''}`} aria-labelledby="headingUsers" data-parent="#accordionSidebar">
+                    <div id="collapseUsers" className={`collapse ${this.checkRoute('^/users') ? 'show' : ''}`}
+                         aria-labelledby="headingUsers" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
                             <h6 className="collapse-header">Actions:</h6>
                             <Link className={`collapse-item ${this.checkRoute('^/users/list') ? 'active' : ''}`} to="/users/list">List</Link>
@@ -75,6 +51,23 @@ export default class Sidebar extends React.Component {
                         </div>
                     </div>
                 </li>
+
+                <li className={`nav-item ${this.checkRoute('^/buildings') ? 'active' : ''}`}>
+                    <a className={`nav-link ${this.checkRoute('^/buildings') ? '' : 'collapsed'}`} href="#" data-toggle="collapse"
+                       data-target="#collapseBuildings" aria-expanded="true" aria-controls="collapseBuildings">
+                        <i className="fas fa-fw fa-building"></i>
+                        <span>Buildings</span>
+                    </a>
+                    <div id="collapseBuildings" className={`collapse ${this.checkRoute('^/buildings') ? 'show' : ''}`} 
+                         aria-labelledby="headingBuildings" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <h6 className="collapse-header">Buildings:</h6>
+                            <Link className={`collapse-item ${this.checkRoute('^/buildings/list') ? 'active' : ''}`} to="/buildings/list">List</Link>
+                            <Link className={`collapse-item ${this.checkRoute('^/buildings/add') ? 'active' : ''}`} to="/buildings/add">Add</Link>
+                        </div>
+                    </div>
+                </li>
+
                 <hr className="sidebar-divider d-none d-md-block"/>
 
                 <div className="text-center d-none d-md-inline">

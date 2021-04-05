@@ -1,6 +1,7 @@
 import React from 'react';
 import UserList from './users/UserList.jsx';
 import UserAdd from './users/UserAdd.jsx';
+import BuildingAdd from './buildings/BuildingAdd.jsx';
 
 class Blank extends React.Component {
     render() {
@@ -11,6 +12,11 @@ class Blank extends React.Component {
 }
 
 export default [
+    {
+        path: "/buildings/add",
+        component: BuildingAdd,
+        routes: []
+    },
     {
         path: "/users/list",
         component: UserList,
