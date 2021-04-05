@@ -1,3 +1,4 @@
+const { query } = require("express");
 const Building = require("../models/building");
 const { toUpperCase } = require("../secret");
 
@@ -16,31 +17,66 @@ module.exports = {
                 }
             });
         });
-
+        //LISTADO, filtro
         api.get("/api/buildings", (request, response) => {
-            let company;
+            let total, skip, limit;
+            const filter = {};
 
-            if (request.query.company === undefined) {
-                company = request.query.company;
-            } else {
-                company = request.query.company.toUpperCase();
+            if (request.query.company !== undefined) {
+                filter.company = new RegExp(request.query.company);
             }
-            const address = request.query.address;
 
-            Building.find({
-                    $or: [
-                        { company: new RegExp(company) },
-                        { address: new RegExp(address) },
-                    ],
-                },
-                (err, data) => {
-                    if (err) {
-                        response.status(500).send(err);
-                        return;
-                    }
-                    response.send(data);
-                }
-            );
+            if (request.query.address !== undefined) {
+                filter.address = new RegExp(request.query.address);
+            }
+
+            if (request.query.skip !== undefined) {
+                skip = parseInt(request.query.skip);
+            }
+
+            if (request.query.limit !== undefined) {
+                limit = parseInt(request.query.limit);
+            }
+
+            // Estilo callback (El callback es: (err, _total) => { ... })
+            /*
+                        Building.countDocuments(filter, (err, _total) => {
+                            if (err) {
+                                response.status(500).send(err);
+                                return;
+                            }
+                            total = _total;
+
+                            Building.find(filter, (err, data) => {
+                                if (err) {
+                                    response.status(500).send(err);
+                                    return;
+                                }
+                                response.status(200).send({
+                                    success: "true",
+                                    total: total,
+                                    buildings: data,
+                                });
+                            });
+                        });
+                        */
+
+            Building.countDocuments(filter)
+                .then((_total) => {
+                    total = _total;
+                    return Building.find(filter, null, { skip, limit }); // = {skip: skip, limit: limit} // Si el nombre de la variable es igual al nombre del campo se puede poner solo el nombre
+                })
+                .then((data) => {
+                    response.status(200).send({
+                        success: "true",
+                        total: total,
+                        buildings: data,
+                    });
+                })
+                .catch((err) => {
+                    response.status(500).send(err);
+                    return;
+                });
         });
 
         api.post("/api/buildings", (request, response) => {
