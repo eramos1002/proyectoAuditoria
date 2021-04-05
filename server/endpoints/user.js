@@ -19,7 +19,7 @@ const catchError = (err, res, next) => {
 
 module.exports = {
     register: api => {
-        api.route('/users')
+        api.route('/api/users')
         .post(function (req, res, next) {
             UserLogic.canUseEmail(req.body.email) // el email tiene un formato válido y no lo tiene ningún otro 
             .then(() => {
@@ -40,7 +40,7 @@ module.exports = {
         })
         .get(function (req, res, next) {
             const datatablesQuery = DatatablesHelper.toMongooseParams(req.query);
-            /*
+
             if (datatablesQuery.datatables.search.value) {
                 const search = new RegExp(datatablesQuery.datatables.search.value);
 
@@ -52,7 +52,7 @@ module.exports = {
                     ]
                 };
             }
-            */
+
             UserLogic.listUsersWithTotal(
                 datatablesQuery.filter,
                 datatablesQuery.projection,
@@ -66,7 +66,7 @@ module.exports = {
             .catch(err => catchError(err, res, next));
         });
 
-        api.route('/users/:id')
+        api.route('api/users/:id')
         .get(function (req, res, next) {
             UserLogic.getUserByIdOrEmail(req.params.id)
             .then(user => {

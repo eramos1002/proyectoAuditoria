@@ -3,9 +3,13 @@ const path = require('path');
 module.exports = {
   entry: path.resolve(__dirname, 'index.js'),
   output: {
-    'path': path.resolve(__dirname),
-    'filename': 'app.bundle.js',
-    'libraryTarget': 'umd'
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
+    filename: 'app.bundle.js',
+    libraryTarget: 'umd'
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   module: {
     rules: [

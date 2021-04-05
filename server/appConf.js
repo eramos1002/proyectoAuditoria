@@ -14,6 +14,7 @@ const appInit = () => {
     // CONFIGURACIÓN: traducimos el json , configuración body parser
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(express.static('public'));
 
     return app;
 };

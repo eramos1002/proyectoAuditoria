@@ -123,7 +123,7 @@ export default class Topbar extends React.Component {
                 </h6>
                             <a className="dropdown-item d-flex align-items-center" href="#">
                                 <div className="dropdown-list-image mr-3">
-                                    <img className="rounded-circle" src="img/undraw_profile_1.svg"
+                                    <img className="rounded-circle" src="/img/undraw_profile_1.svg"
                                         alt="" />
                                     <div className="status-indicator bg-success"></div>
                                 </div>
@@ -135,7 +135,7 @@ export default class Topbar extends React.Component {
                             </a>
                             <a className="dropdown-item d-flex align-items-center" href="#">
                                 <div className="dropdown-list-image mr-3">
-                                    <img className="rounded-circle" src="img/undraw_profile_2.svg"
+                                    <img className="rounded-circle" src="/img/undraw_profile_2.svg"
                                         alt="" />
                                     <div className="status-indicator"></div>
                                 </div>
@@ -147,7 +147,7 @@ export default class Topbar extends React.Component {
                             </a>
                             <a className="dropdown-item d-flex align-items-center" href="#">
                                 <div className="dropdown-list-image mr-3">
-                                    <img className="rounded-circle" src="img/undraw_profile_3.svg"
+                                    <img className="rounded-circle" src="/img/undraw_profile_3.svg"
                                         alt="" />
                                     <div className="status-indicator bg-warning"></div>
                                 </div>
@@ -181,7 +181,7 @@ export default class Topbar extends React.Component {
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span className="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             <img className="img-profile rounded-circle"
-                                src="img/undraw_profile.svg" />
+                                src="/img/undraw_profile.svg" />
                         </a>
                         {/* Dropdown - User Information */}
                         <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
