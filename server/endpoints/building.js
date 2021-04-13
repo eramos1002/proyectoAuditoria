@@ -40,26 +40,26 @@ module.exports = {
 
             // Estilo callback (El callback es: (err, _total) => { ... })
             /*
-                        Building.countDocuments(filter, (err, _total) => {
-                            if (err) {
-                                response.status(500).send(err);
-                                return;
-                            }
-                            total = _total;
+                                    Building.countDocuments(filter, (err, _total) => {
+                                        if (err) {
+                                            response.status(500).send(err);
+                                            return;
+                                        }
+                                        total = _total;
 
-                            Building.find(filter, (err, data) => {
-                                if (err) {
-                                    response.status(500).send(err);
-                                    return;
-                                }
-                                response.status(200).send({
-                                    success: "true",
-                                    total: total,
-                                    buildings: data,
-                                });
-                            });
-                        });
-                        */
+                                        Building.find(filter, (err, data) => {
+                                            if (err) {
+                                                response.status(500).send(err);
+                                                return;
+                                            }
+                                            response.status(200).send({
+                                                success: "true",
+                                                total: total,
+                                                buildings: data,
+                                            });
+                                        });
+                                    });
+                                    */
 
             Building.countDocuments(filter)
                 .then((_total) => {
@@ -92,7 +92,7 @@ module.exports = {
                     response.status(201).send(savedBuilding);
                 })
                 .catch((err) => {
-                    response.status(500).send(err);
+                    response.status(500).send({ message: err.toString() });
                 });
         });
 
