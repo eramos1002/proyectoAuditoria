@@ -9,15 +9,15 @@ export default class BuildingAdd extends React.Component {
         address: "",
       },
       notification: {
-        message: "Texto de prueba dentro del estado xxxx",
+        message: "",
         type: "", // danger success
       },
     };
 
     this.fieldChanged = this.fieldChanged.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.messageChanged = this.messageChanged.bind(this);
     this.typeChanged = this.typeChanged.bind(this);
+    //this.notificationDiv = this.notificationDiv.bind(this);
   }
 
   fieldChanged(event) {
@@ -29,14 +29,6 @@ export default class BuildingAdd extends React.Component {
       return state;
     });
     console.log(name, newValue);
-  }
-  messageChanged(event) {
-    event.preventDefault();
-    const message = event.target.value;
-    this.setState((state) => {
-      state.notification.message = message;
-      return state;
-    });
   }
 
   typeChanged(event) {
@@ -102,12 +94,6 @@ export default class BuildingAdd extends React.Component {
     return (
       <div>
         {this.notificationDiv()}
-        <input type="text" onChange={this.messageChanged} />
-        <select onChange={this.typeChanged}>
-          <option value="danger"> error </option>
-          <option value="success"> exito </option>
-        </select>
-
         <form>
           <div className="mb-3">
             <label htmlFor="company" className="form-label">
