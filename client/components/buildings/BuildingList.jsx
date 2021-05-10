@@ -1,26 +1,31 @@
 import React from "react";
+import BuildingPaginator from "./BuildingPaginator.jsx";
 
 export default class BuildingList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      skip: 0,
+      limit: 10,
+      total: 0,
       buildings: [],
     };
   }
-  componentDidMount() {
-    fetch("http://localhost:8080/api/buildings")
-      .then((response) => {
-        return response.json();
-      })
+
+  fetchBuildings(skip, limit) {
+    fetch(`http://localhost:8080/api/buildings?skip=${skip}&limit=${limit}`)
+      .then((response) => response.json())
       .then((data) => {
         this.setState((state) => {
           state.buildings = data.buildings;
           return state;
         });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
+  }
+
+  componentDidMount() {
+    this.fetchBuildings(0, 10);
   }
 
   get rows() {
@@ -74,6 +79,7 @@ export default class BuildingList extends React.Component {
             </div>
           </div>
         </form>
+        <BuildingPaginator total={8} skip={0} limit={10} />
         <table className="table" id="dataTable">
           <thead className="thead-dark">
             <tr>
@@ -83,35 +89,6 @@ export default class BuildingList extends React.Component {
           </thead>
           <tbody>{this.rows}</tbody>
         </table>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <a className="page-link" href="#">
-                Previous
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                1
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                2
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                3
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
     );
   }
