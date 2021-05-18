@@ -1,5 +1,6 @@
 import React from "react";
 import BuildingPaginator from "./BuildingPaginator.jsx";
+import BuildingFilter from "./BuildingFilter.jsx";
 
 export default class BuildingList extends React.Component {
   constructor(props) {
@@ -8,15 +9,30 @@ export default class BuildingList extends React.Component {
       skip: 0,
       limit: 10,
       total: 0,
+      company: "",
+      address: "",
       buildings: [],
     };
+
+    this.fetchBuildings = this.fetchBuildings.bind(this);
+    this.changeSkipAndLimit = this.changeSkipAndLimit.bind(this);
+    this.changeCompanyAndAddress = this.changeCompanyAndAddress.bind(this);
+    this.companySearch = this.companySearch.bind(this);
+    this.addressSearch = this.addressSearch.bind(this);
   }
 
-  fetchBuildings(skip, limit) {
-    fetch(`http://localhost:8080/api/buildings?skip=${skip}&limit=${limit}`)
+  fetchBuildings(skip, limit, company, address) {
+    fetch(
+      `http://localhost:8080/api/buildings?skip=${skip}&limit=${limit}&company=${company}&address=${address}`
+    )
       .then((response) => response.json())
       .then((data) => {
         this.setState((state) => {
+          state.skip = skip;
+          state.limit = limit;
+          state.total = data.total;
+          state.company = company;
+          state.address = address;
           state.buildings = data.buildings;
           return state;
         });
@@ -24,10 +40,27 @@ export default class BuildingList extends React.Component {
       .catch((error) => console.log(error));
   }
 
-  componentDidMount() {
-    this.fetchBuildings(0, 10);
+  changeSkipAndLimit(skip, limit) {
+    const { company, address } = this.state;
+    this.fetchBuildings(skip, limit, company, address);
   }
 
+  changeCompanyAndAddress(company, address) {
+    const { skip, limit } = this.state;
+    this.fetchBuildings(skip, limit, company, address);
+  }
+
+  componentDidMount() {
+    this.fetchBuildings(0, 10, "", "");
+  }
+  companySearch(texto) {
+    this.setState({ company: texto });
+    console.log("textocompany", texto);
+  }
+  addressSearch(texto) {
+    this.setState({ address: texto });
+    console.log("texto address", texto);
+  }
   get rows() {
     const trs = [];
     for (const building of this.state.buildings) {
@@ -43,6 +76,7 @@ export default class BuildingList extends React.Component {
         trs.push(
           <tr>
             <td>{this.state.buildings[k].company}</td>
+
             <td>{this.state.buildings[k].address}</td>
           </tr>
         );
@@ -54,32 +88,20 @@ export default class BuildingList extends React.Component {
   render() {
     return (
       <div>
-        <form>
-          <div className="form-group row">
-            <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">
-              Company
-            </label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputEmail3" />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">
-              Address
-            </label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputPassword3" />
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-sm-10">
-              <button type="submit" className="btn btn-primary">
-                Search
-              </button>
-            </div>
-          </div>
-        </form>
-        <BuildingPaginator total={8} skip={0} limit={10} />
+        <BuildingFilter
+          company={this.state.company}
+          address={this.state.address}
+          companySearch={this.companySearch}
+          addressSearch={this.addressSearch}
+          fetch={this.changeCompanyAndAddress}
+        />
+        <BuildingPaginator
+          total={this.state.total}
+          skip={this.state.skip}
+          limit={this.state.limit}
+          fetch={this.changeSkipAndLimit}
+        />
+
         <table className="table" id="dataTable">
           <thead className="thead-dark">
             <tr>

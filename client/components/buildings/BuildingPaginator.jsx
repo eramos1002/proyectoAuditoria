@@ -3,8 +3,7 @@ import React from "react";
 export default class BuildingPaginator extends React.Component {
   constructor(props) {
     super(props);
-
-    // props a recibir: total de elementos (ejm 612), limit y skip actuales
+    this.changePage = this.changePage.bind(this);
   }
 
   get totalPages() {
@@ -38,6 +37,13 @@ export default class BuildingPaginator extends React.Component {
       return "page-item";
     }
   }
+
+  changePage(event) {
+    const skip = parseInt(event.target.getAttribute("skip"));
+    const limit = parseInt(event.target.getAttribute("limit"));
+    this.props.fetch(skip, limit);
+  }
+
   render() {
     return this.props.total === 0 ? (
       <nav aria-label="...">
@@ -53,16 +59,26 @@ export default class BuildingPaginator extends React.Component {
           <li className={this.firstClassName}>
             <a
               className="page-link"
-              href="#"
               tabIndex="-1"
+              href="#"
               aria-disabled="true"
+              skip={0}
+              limit={this.props.limit}
+              onClick={this.changePage}
             >
               Primera
             </a>
           </li>
           <li className={this.firstClassName}>
-            <a className="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
+            <a
+              className="page-link"
+              href="#"
+              aria-label="Previous"
+              skip={(this.currentPage - 2) * this.props.limit}
+              limit={this.props.limit}
+              onClick={this.changePage}
+            >
+              &laquo;
             </a>
           </li>
           <li className="page-item">
@@ -71,12 +87,25 @@ export default class BuildingPaginator extends React.Component {
             </a>
           </li>
           <li className={this.lastClassName}>
-            <a className="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
+            <a
+              className="page-link"
+              href="#"
+              aria-label="Next"
+              skip={this.currentPage * this.props.limit}
+              limit={this.props.limit}
+              onClick={this.changePage}
+            >
+              &raquo;
             </a>
           </li>
           <li className={this.lastClassName}>
-            <a className="page-link" href="#">
+            <a
+              className="page-link"
+              href="#"
+              skip={(this.totalPages - 1) * this.props.limit}
+              limit={this.props.limit}
+              onClick={this.changePage}
+            >
               Último
             </a>
           </li>
